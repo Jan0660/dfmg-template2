@@ -1,0 +1,52 @@
+﻿name: Vercel Preview Deployment
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+on:
+  push:
+    branches-ignore:
+      - main
+  workflow_dispatch:
+jobs:
+  Deploy-Preview:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          path: docs
+      - name: setup environment variables
+        uses: falti/dotenv-action@v1
+        with:
+          path: docs/.env
+          export-variables: true
+          keys-case: upper
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          repository: ${{ env.PROJECT_REPO }}
+          path: ${{ env.PROJECT_NAME }}
+          ref: ${{ env.PROJECT_BRANCH }}
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Install DocFxMarkdownGen
+        run: dotnet tool install -g DocFxMarkdownGen
+      - name: Install DocFx
+        run: dotnet tool install -g docfx
+      - name: Generate Documentation
+        run: chmod a+x docs/generate.sh; ./docs/generate.sh
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        working-directory: docs
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        working-directory: docs
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        working-directory: docs
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}

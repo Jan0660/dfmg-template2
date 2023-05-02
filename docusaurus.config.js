@@ -6,15 +6,15 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'dfmg-template',
-  tagline: 'DocFxMarkdownGen Docusaurus template',
+  title: 'dfmg-template2',
+  tagline: 'DocFxMarkdownGen Docusaurus template v2',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'Jan0660', // Usually your GitHub org/user name.
-  projectName: 'dfmg-template', // Usually your repo name.
+  projectName: 'dfmg-template2', // Usually your repo name.
 
   presets: [
     [
@@ -60,7 +60,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/Jan0660/dfmg-template',
+                href: 'https://github.com/Jan0660/dfmg-template2',
               },
             ],
           },
