@@ -42,6 +42,19 @@ The following steps count with the project you are generating documentation bein
 
 Done! All you need to do now is to edit `docusaurus.config.js` to suit your project and generate api documentation with the `generate.sh` script.
 
+### Versioned documentation
+
+For keeping multiple versions of the generated documentation you can set the `VERSIONS` variable in `.env` to something like this:
+
+```shell
+# multiple items would be like VERSIONS=("0.1.0;v0.1.0" "0.2.0;v0.2.0")
+VERSIONS=("0.1.0;v0.1.0")
+```
+
+And `generate.sh` will take care of the rest(provided your project is structure like this template).
+
+The part before the semicolon is the version name in docusaurus and the part after is the git tag. You can add as many as you want, just separate them with a space.
+
 ### workflow_dispatch
 
 If you kept the GitHub Actions you will need extra setup so that your documentation updates when you push to your .NET project.
