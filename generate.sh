@@ -35,7 +35,7 @@ else
         echo "Doing version $version, docusaurus_version=$docusaurus_version, checkout_version=$checkout_version"
         pushd ../$PROJECT_NAME
         # maybe redundant git fetch
-        git fetch
+        git fetch --tags origin
         git checkout $checkout_version
         popd
         # write config.yaml for this version
