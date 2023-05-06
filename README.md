@@ -36,6 +36,19 @@ The following steps count with the project you are generating documentation bein
   - `PROJECT_BRANCH` to the branch you want to generate documentation for.
 - In `docfx.json` change `Project` to your `PROJECT_NAME` you set in `.env` earlier and also check "src" matches your project structure.
 - Do the following for the workflows in `.github/workflows/` if you wish to keep them:
+  - If you are targeting a framework > .NET 6 you need to add another "Setup .NET Core SDK" step after the one that install .NET 6, for example:
+
+    ```yml
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Setup .NET 7 SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    ```
+
   - If different, change `main` to your main/production branch name(of the documentation repository).
   - For Vercel, set up the secrets (one of the passages [here](https://vercel.com/guides/how-can-i-use-github-actions-with-vercel#configuring-github-actions-for-vercel) will help you).
   - For GitHub Pages, it seems you have to do [this](https://github.com/peaceiris/actions-gh-pages/issues/744#issuecomment-1119685318) for it to work.
